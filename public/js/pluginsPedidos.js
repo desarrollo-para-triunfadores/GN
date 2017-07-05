@@ -16,7 +16,7 @@
  */
 //$("#modal-ingresar-cae").modal();
 
-
+$('#menu-toggle').trigger('click');
 /*** Instanciar variables Globales ***/
 var horas_produccion = 0;
 
@@ -1444,6 +1444,91 @@ setInterval(function() {
     document.getElementById("hora_actual").innerHTML = currentTimeString;
 }, 1000);
 
+/** 1-7-17 **/
+/** Reporte de tabla PEDIDOS */
+function reporte_pedidos(){
+    var numLi = 0;
+    var  pedidos= [];
+    /*
+    var resumen = {
+        //saldo_inicial:null, ingresos:null, egresos:null, saldo_cierre:null, saldo_actual:null,
+        pedidos: [],
+    };
+    */
+
+    $('#tabla_p_p tbody tr').each(function () {
+        var dataFila = $('#tabla_p_p').DataTable().row(this).data();
+        var linea = {id: dataFila[0], cliente: dataFila[1], fecha: dataFila[2], importe: dataFila[3],
+            sena: dataFila[4], tomo: dataFila[5], forma_pago: dataFila[6], fecha_entrega: dataFila[7]};
+        pedidos[numLi] = linea;
+        numLi++;
+    });
+
+    var array = JSON.stringify(pedidos);
+    //var enlace_reporte_pedidos = 'http://localhost/GN/EditableInvoice/reporte_pedidos.php?&datos_pedidos=' + encodeURIComponent(array);
+    var enlace_reporte_pedidos = 'http://localhost/factura/EditableInvoice/reporte_pedidos.php?&datos_pedidos=' + encodeURIComponent(array)
+    //';
+    window.open(enlace_reporte_pedidos);
+    /*
+    $.ajax({
+        dataType: 'json', url: "/admin/pdf/create",
+        data: {
+            array_pedidos: pedidos,
+        },
+        success: function (data) {
+            console.log(data);
+            alert('se imprimio el reporte');
 
 
+        }
+    });
+    */
+}
+
+$(document).ready(function () {
+    $('#tabla_ventas').DataTable({
+        responsive: true,
+        "language": {
+            "url": "/js/spanish.json"
+        },
+        "lengthMenu": [[-1], ["Todos"]]
+    });
+});
+function reporte_ventas(){
+    var numLi = 0;
+    //var ventas= [];
+    var resumen = {
+        total_recaudado:null, articulos_vendidos:null, ventas:null, clientes:null, mejor_cliente:null, mejor_producto:null,
+        ventas: [],
+    };
+
+    $('#tabla_ventas tbody tr').each(function () {
+        var dataFila = $('#tabla_ventas').DataTable().row(this).data();
+        var linea = {id: dataFila[0], cliente: dataFila[1], fecha: dataFila[2], fecha_venta: dataFila[3],
+            importe: dataFila[4], forma_pago: dataFila[6], tomo: dataFila[7], vendio: dataFila[8]};
+        resumen.ventas[numLi] = linea;
+        numLi++;
+    });
+    //resumen.articulos_vendidos = $('#total_articulos_vendidos').val();
+    //resumen.total_recaudado = $('#total_recaudado').val();
+
+
+    var array = JSON.stringify(resumen);
+    var enlace_reporte_ventas = 'http://localhost/factura/EditableInvoice/reporte_ventas.php?&datos_ventas=' + encodeURIComponent(array)
+    window.open(enlace_reporte_ventas);
+    /*
+     $.ajax({
+     dataType: 'json', url: "/admin/pdf/create",
+     data: {
+     array_pedidos: pedidos,
+     },
+     success: function (data) {
+     console.log(data);
+     alert('se imprimio el reporte');
+
+
+     }
+     });
+     */
+}
 

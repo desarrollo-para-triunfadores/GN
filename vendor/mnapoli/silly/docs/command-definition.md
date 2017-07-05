@@ -30,7 +30,7 @@ A command can take options:
 | Simple flag (boolean value)                     | `greet [--yell]`         |
 | Option with an mandatory value                  | `greet [--iterations=]`  |
 | Option that can be used 0-n times (array value) | `greet [--iterations=]*` |
-| Option with a shortcut                          | `greet [-y|--yell]`      |
+| Option with a shortcut                          | `greet [-y\|--yell]`      |
 
 Options are always optional (duh). If an option is required, then it should be an argument.
 
@@ -75,4 +75,15 @@ Arguments and options containing hyphens (`-`) are matched to camelCase variable
 $app->command('run [--dry-run]', function ($dryRun) {
     // ...
 });
+```
+
+## Single command applications
+
+Sometimes you write an application with a single command, or you want one command to be the default command.
+
+Symfony provides the `setDefaultCommand()` method for that, you can use it like this:
+
+```php
+$app->command('run', /* ... */);
+$app->setDefaultCommand('run');
 ```

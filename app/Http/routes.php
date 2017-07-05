@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
    Route::resource('movimientos','MovimientosController');
    Route::resource('pedidos','PedidosController');             //Pedidos para ventas de Articulos (se debitan insumos del stock)
+   Route::resource('pdf', 'PdfController'); //new!
 
    Route::resource('compras','ComprasController');             //Compras de Insumos
    Route::resource('unidades_medidas','UnidadesController');

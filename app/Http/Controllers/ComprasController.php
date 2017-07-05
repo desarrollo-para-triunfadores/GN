@@ -35,11 +35,45 @@ class ComprasController extends Controller {
         }
     }
 
-    public function index() {
-        $compras = Compra::searchRecibido(1)    //se considerara compra mostrable solo la que fue recibida
-                ->orderBy('id', 'ASC')
+    public function index(Request $request) {
+        $compras = Compra::all();    //se considerara compra mostrable solo la que fue recibida
+        $fecha1= "";
+        $fecha2= "";
+
+        $compras_entre_fechas = [];
+        if(!is_null($request->fechaInicio)){
+            $fecha1= $request->fechaInicio;
+            $fecha1_en_datetime = Carbon::createFromFormat('Y-m-d', $fecha1);   //convertimos a datetime, para calculos con fecha
+            //$fecha1 = date_format($fecha1_en_datetime, "d/m/Y");
+            $fecha2= $request->fechaFin;
+            $fecha2_en_datetime = Carbon::createFromFormat('Y-m-d', $fecha2);   //convertimos a datetime, para calculos con fecha
+            //$fecha2 = date_format($fecha2_en_datetime, "d/m/Y");
+            //dd($fecha1, $fecha2);
+            /** si se pide un intervalo de fechas... */
+            foreach ($compras as $compra) {
+                //--------------------------- seteamos a la variable $fechaPedido con la fecha de pedido o la fecha de entrega, segun chechbox de vista tablaPedidos.blade.php ------------------------
+
+                $fechaCompra = Carbon::createFromFormat('d-m-Y', $compra->fecha_compra);  //convertimos a datetime, para calculos con fecha
+
+                //------------------------------------------------------------------------------------------------
+                if ( ( $fechaCompra >= $fecha1_en_datetime)&&($fechaCompra <= $fecha2_en_datetime)){ //se compara que la fecha del pedido se encuentre entre las fechas que determinan el rango
+                    array_push($compras_entre_fechas, $compra);      //guardamos la pedido en un listado para pasar a la vista
+                    //dd($fechaCompra);
+                    //las dos posteriores variables son contadores que se irán incrementando a medida que transcurra el foreach
+                }
+            }
+            //se retornan la vista y los datos asociados a ella.
+            return view('admin.compras.tablaPedidos')
+                ->with('compras',$compras_entre_fechas)
+                ->with('fecha1',$fecha1)
+                ->with('fecha2',$fecha2);
+            /** Fin de filtrado de pedidos por intervalo de fechas */
+        }else {
+            $compras = Compra::searchRecibido(1)//se considerara compra mostrable solo la que fue recibida
+            ->orderBy('id', 'ASC')
                 ->paginate();
-        return view('admin.compras.tablaPedidos')->with('compras', $compras);
+            return view('admin.compras.tablaPedidos')->with('compras', $compras);
+        }
     }
 
     public function create(Request $request) {

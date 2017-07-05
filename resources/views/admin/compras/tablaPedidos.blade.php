@@ -12,7 +12,14 @@
     <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
         <div class="page-header pull-left">
             <div class="page-title">
-              Compras</div>
+              Compras de Insumos</div>
+        </div>
+        <div class="page-header pull-left ">
+            <div class="page-toolbar">
+                <div class="row">
+                    @include('admin.compras.contenidoFormBusqueda')
+                </div>
+            </div>
         </div>
         <div class="page-header pull-right">
             <div class="page-toolbar">
@@ -38,16 +45,16 @@
                                 <div class="panel-body">
                                   @include('admin.partes.msjError')
                                   @include('flash::message')
-                                  <table class="display dataTable table table-hover table-striped">
+                                  <table id="tabla_compras" class="display dataTable table table-hover table-striped">
                                       <thead>
                                           <tr>
-                                              <th class="text-center">N° Compra</th>
-                                              <th class="text-center">Fecha y hora de compra</th>
+                                              <th class="text-center">#</th>
+                                              <th class="text-center">Fecha compra</th>
                                               <th class="text-center">Importe</th>
                                               <th class="text-center">Se pagó</th>
                                               <th class="text-center">Se recibió</th>
-                                              <th class="text-center">Usuario que computo la compra</th>
-                                              <th class="text-center">Detalle</th>
+                                              <th class="text-center">Usuario compra</th>
+                                              <th class="text-center">Ver</th>
                                           </tr>
                                       </thead>
                                       <tbody>
@@ -57,14 +64,14 @@
                                               <td class="text-center">{{ $compra->fecha_compra }} - {{ $compra->hora_compra }}</td>
                                               <td class="text-center">${{ $compra->importe }}</td>
                                               @if ($compra->pagado)
-                                                  <td class="text-center">Si</td>
+                                                  <td class="text-center">Si ✔️ </td>
                                               @else
-                                                  <td class="text-center">No</td>
+                                                  <td class="text-center">No ❌</td>
                                               @endif
                                               @if ($compra->recibido)
-                                                  <td class="text-center">Si</td>
+                                                  <td class="text-center">Si ✔️ </td>
                                               @else
-                                                  <td class="text-center">No</td>
+                                                  <td class="text-center">No ❌</td>
                                               @endif
                                               <td class="text-center">{{ $compra->usuarioCompra->name }}</td>
                                               <td class="text-center">
@@ -73,6 +80,17 @@
                                           </tr>
                                       @endforeach
                                       </tbody>
+                                      <tfoot>
+                                      <tr>
+                                          <th class="text-center">#</th>
+                                          <th class="text-center">Fecha compra</th>
+                                          <th class="text-center">Importe</th>
+                                          <th class="text-center">Se pagó</th>
+                                          <th class="text-center">Se recibió</th>
+                                          <th class="text-center">Usuario compra</th>
+                                          <th class="text-center">Ver</th>
+                                      </tr>
+                                      </tfoot>
                                   </table>
                                 </div>
                             </div>

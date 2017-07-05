@@ -27,9 +27,11 @@
         <span class="badge bg-red">
             <?php $i=0; ?>
             @foreach($pedidos as $pedido)
-
-                <?php $fecha_entrega = strtotime($pedido->fecha_entrega_estimada); ?>
-                @if( ($fecha_entrega - strtotime($fecha_hoy) > -1))
+                    <?php
+                        $fecha_entrega = \Carbon\Carbon::createFromFormat('d/m/Y', $pedido->fecha_entrega_estimada);
+                        $fecha_hoy = \Carbon\Carbon::now('America/Buenos_Aires');
+                    ?>
+                @if($fecha_entrega <= $fecha_hoy)
                         <?php $i++; ?>
                 @endif
             @endforeach
@@ -41,17 +43,21 @@
             <span><h4 class="text-facebook">Hay clientes que podrian retirar sus pedidos</h4></span>
         </span>
         @foreach($pedidos as $pedido)
-          @if($pedido->fecha_entrega_estimada <= $fecha_hoy)
+            <?php
+            $fecha_entrega = \Carbon\Carbon::createFromFormat('d/m/Y', $pedido->fecha_entrega_estimada);
+            $fecha_hoy = \Carbon\Carbon::now('America/Buenos_Aires');
+            ?>
+          @if($fecha_entrega < $fecha_hoy)
             @if($pedido->entregado == 0)
                 <li>
                     <a>
 
                         <a data-toggle="tooltip" data-placement="top" title="Visualizar registro. Al visualizar este registro podrá señar la totalidad del pedido o realizar la entrega del pedido" href="{{ route('admin.pedidos.edit', $pedido->id) }}" class="btn btn-info">
                             <span class="message">
-                               @if($pedido->fecha_entrega_estimada == $fecha_hoy)
+                               @if($fecha_entrega == $fecha_hoy)
                                   <h5 class="text-filter-box">Hoy se debe entregar el pedido de {{$pedido->cliente->nombre}} {{$pedido->cliente->apellido}}, n° de pedido {{$pedido->id}} del {{$pedido->fecha_pedido}}</h5>
-                               @elseif($pedido->fecha_entrega_estimada <  $fecha_hoy)
-                                    <h5 class="text-filter-box text-danger">Hace {{ ($fecha_hoy - $pedido->fecha_entrega_estimada) +1}} días se debió entregar el pedido de {{$pedido->cliente->nombre}} {{$pedido->cliente->apellido}}, n° de pedido {{$pedido->id}} del {{$pedido->fecha_pedido}}</h5>
+                               @elseif($fecha_entrega <  $fecha_hoy)
+                                    <h5 class="text-filter-box text-danger">Hace {{ $fecha_entrega->diffInDays($fecha_hoy)}} días se debió entregar el pedido de {{$pedido->cliente->nombre}} {{$pedido->cliente->apellido}}, n° de pedido {{$pedido->id}} del {{$pedido->fecha_pedido}}</h5>
                                @endif
                             </span>
                         </a>

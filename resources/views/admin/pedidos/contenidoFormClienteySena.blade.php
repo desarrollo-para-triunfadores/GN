@@ -216,22 +216,6 @@ $fecha_elegida=null; //la declaro global para usarla en el popup
         <h2>Fecha de entrega</h2>
         <section>
             {{-- ENTREGA --}}
-            {{--
-            <div class="form-group"><label class="col-sm-3 control-label">FECHA ENTREGA ESTIMADA:</label>
-                <div class="col-sm-8 controls">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <div class="input-icon right">
-                                {!! Form::date('fecha_entrega_date',\Carbon\Carbon::now() , ['id'=>'fecha_entrega_date','min'=>$fecha_hoy])!!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            --}}
-            {{-- /ENTREGA --}}
-
-            {{-- ENTREGA --}}
             <div class="form-group"><label class="col-sm-3 control-label">FECHA ENTREGA ESTIMADA:</label>
                 <div class="col-sm-8 controls">
                     <div class="row">

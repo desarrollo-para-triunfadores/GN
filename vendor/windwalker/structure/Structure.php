@@ -8,11 +8,6 @@
 
 namespace Windwalker\Structure;
 
-if (!interface_exists('JsonSerializable'))
-{
-	include_once __DIR__ . '/Compat/JsonSerializable.php';
-}
-
 /**
  * Structure class
  *
@@ -33,14 +28,14 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 * @var    array
 	 * @since  2.0
 	 */
-	protected $data = array();
+	protected $data = [];
 
 	/**
 	 * Property ignoreValues.
 	 *
 	 * @var  array
 	 */
-	protected $ignoreValues = array(null);
+	protected $ignoreValues = [null];
 
 	/**
 	 * Constructor
@@ -59,7 +54,14 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 		}
 		elseif (!empty($data) && is_string($data))
 		{
-			$this->loadString($data, $format);
+			if (strlen($data) < PHP_MAXPATHLEN && is_file($data))
+			{
+				$this->loadFile($data, $format);
+			}
+			else
+			{
+				$this->loadString($data, $format);
+			}
 		}
 	}
 
@@ -90,7 +92,9 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 		}
 		catch (\Exception $e)
 		{
-			return trigger_error((string) $e, E_USER_ERROR);
+			trigger_error((string) $e, E_USER_ERROR);
+
+			return '';
 		}
 	}
 
@@ -101,7 +105,6 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 * @return  array
 	 *
 	 * @since   2.0
-	 * @note    The interface is only present in PHP 5.4 and up.
 	 */
 	public function jsonSerialize()
 	{
@@ -178,7 +181,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 */
 	public function reset()
 	{
-		$this->data = array();
+		$this->data = [];
 
 		return $this;
 	}
@@ -209,7 +212,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 *
 	 * @since   2.0
 	 */
-	public function loadFile($file, $format = Format::JSON, $options = array())
+	public function loadFile($file, $format = Format::JSON, $options = [])
 	{
 		$raw = isset($options['load_raw']) ? $options['load_raw'] : false;
 		
@@ -229,7 +232,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 *
 	 * @since   2.0
 	 */
-	public function loadString($data, $format = Format::JSON, $options = array())
+	public function loadString($data, $format = Format::JSON, $options = [])
 	{
 		$raw = isset($options['load_raw']) ? $options['load_raw'] : false;
 		
@@ -273,13 +276,13 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	{
 		$nodes = StructureHelper::getPathNodes($path);
 
-		$data = array();
+		$data = [];
 
 		$tmp =& $data;
 
 		foreach ($nodes as $node)
 		{
-			$tmp[$node] = array();
+			$tmp[$node] = [];
 
 			$tmp =& $tmp[$node];
 		}
@@ -450,7 +453,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 *
 	 * @since   2.0
 	 */
-	public function toString($format = Format::JSON, $options = array())
+	public function toString($format = Format::JSON, $options = [])
 	{
 		return StructureHelper::toString($this->data, $format, $options);
 	}
@@ -481,9 +484,9 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 
 			if (is_array($value))
 			{
-				if (!isset($parent[$key]))
+				if (!isset($parent[$key]) || !is_array($parent[$key]))
 				{
-					$parent[$key] = array();
+					$parent[$key] = [];
 				}
 
 				$this->bindData($parent[$key], $value, $raw);
@@ -506,7 +509,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 	 */
 	protected function asArray($data)
 	{
-		$array = array();
+		$array = [];
 
 		if (is_object($data))
 		{
@@ -584,7 +587,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 
 		if (!$node)
 		{
-			$node = array();
+			$node = [];
 		}
 		elseif (is_object($node))
 		{
@@ -630,7 +633,7 @@ class Structure implements \JsonSerializable, \ArrayAccess, \IteratorAggregate, 
 
 		if (!$node)
 		{
-			$node = array();
+			$node = [];
 		}
 		elseif (is_object($node))
 		{

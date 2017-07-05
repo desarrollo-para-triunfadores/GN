@@ -1,4 +1,4 @@
-
+<script src="{{ URL::asset('js/pluginsPedidos.js') }}"></script>
                 <div class="col-lg-12">
 
                     <div class="row">
@@ -8,7 +8,7 @@
                                 <div class="panel-body">
                                   @include('admin.partes.msjError')
                                   @include('flash::message')
-                                  <table class="display dataTable table table-hover table-striped">
+                                  <table id="tabla_ventas" class="display dataTable table table-hover table-striped">
                                       <thead>
                                           <tr>
                                               <th class="text-center">id</th>

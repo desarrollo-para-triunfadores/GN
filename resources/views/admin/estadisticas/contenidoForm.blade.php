@@ -21,7 +21,7 @@
                         <tbody>
                             <tr>
                                 <td><h4 class="box-heading"><label>Total de artículos vendidos:</label></h4></td>
-                                <td><h4><b>{{ $articulosVendidos }}</b></h4></td>
+                                <td id="total_articulos_vendidos"><h4><b>{{ $articulosVendidos }}</b></h4></td>
                             </tr>
                         </tbody>
                     </table>
@@ -31,7 +31,7 @@
                         <tbody>
                             <tr class="info">
                                 <td><h4 class="box-heading"><label>Total recaudado:</label></h4></td>
-                                <td><h4><b>${{ $totalRecaudado }}</b></h4></td>
+                                <td id="total_recaudado"><h4><b>${{ $totalRecaudado }}</b></h4></td>
                             </tr>
                         </tbody>
                     </table>

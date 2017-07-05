@@ -1,5 +1,7 @@
 $(document).ready(function () {
     constructorTabla();
+    constructorTabla_pedidos_pendientes();
+    //constructorTabla_movimientos();
     constructorSelect();
     verificarVacio();
     $("#"+listSidebar).addClass("active");
@@ -44,6 +46,15 @@ $(document).ready(function () {
          todayBtn: "linked",
          endDate: "1d"
      });
+
+    // Date range script - Start of the sscript
+    $("#fecha_mov_min").daterangepicker({
+        language: 'es',
+        todayHighlight: true,
+        format: "dd-mm-yyyy",
+        todayBtn: "linked",
+        endDate: "1d"
+    });
 
 
 });

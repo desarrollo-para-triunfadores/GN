@@ -72,7 +72,7 @@ class TwigFilesystemLoader extends \Twig_Loader_Filesystem
 	{
 		$ext = pathinfo($name, PATHINFO_EXTENSION);
 
-		if ($ext == 'twig')
+		if ($ext === 'twig')
 		{
 			$name = substr($name, 0, -5);
 		}
@@ -91,7 +91,7 @@ class TwigFilesystemLoader extends \Twig_Loader_Filesystem
 	public function addPath($path, $namespace = self::MAIN_NAMESPACE)
 	{
 		// invalidate the cache
-		$this->cache = array();
+		$this->cache = [];
 
 		$this->paths[$namespace][] = rtrim($path, '/\\');
 	}

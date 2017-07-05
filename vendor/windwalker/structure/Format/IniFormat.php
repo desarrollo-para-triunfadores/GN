@@ -22,7 +22,7 @@ class IniFormat implements FormatInterface
 	 *
 	 * @var  array
 	 */
-	protected static $cache = array();
+	protected static $cache = [];
 
 	/**
 	 * Converts an object into an INI formatted string
@@ -35,10 +35,10 @@ class IniFormat implements FormatInterface
 	 *
 	 * @return  string  INI formatted string.
 	 */
-	public static function structToString($struct, array $options = array())
+	public static function structToString($struct, array $options = [])
 	{
-		$local = array();
-		$global = array();
+		$local = [];
+		$global = [];
 
 		// Iterate over the object to set the properties.
 		foreach ($struct as $key => $value)
@@ -84,7 +84,7 @@ class IniFormat implements FormatInterface
 	 *
 	 * @return  object   Data object.
 	 */
-	public static function stringToStruct($data, array $options = array())
+	public static function stringToStruct($data, array $options = [])
 	{
 		$sections = (isset($options['processSections'])) ? $options['processSections'] : false;
 
@@ -113,7 +113,7 @@ class IniFormat implements FormatInterface
 			$line = trim($line);
 
 			// Ignore empty lines and comments.
-			if (empty($line) || ($line{0} == ';'))
+			if (empty($line) || ($line{0} === ';'))
 			{
 				continue;
 			}
@@ -123,14 +123,14 @@ class IniFormat implements FormatInterface
 				$length = strlen($line);
 
 				// If we are processing sections and the line is a section add the object and continue.
-				if (($line[0] == '[') && ($line[$length - 1] == ']'))
+				if (($line[0] === '[') && ($line[$length - 1] === ']'))
 				{
 					$section = substr($line, 1, $length - 2);
 					$obj->$section = new \stdClass;
 					continue;
 				}
 			}
-			elseif ($line{0} == '[')
+			elseif ($line{0} === '[')
 			{
 				continue;
 			}
@@ -148,7 +148,7 @@ class IniFormat implements FormatInterface
 			// If the value is quoted then we assume it is a string.
 			$length = strlen($value);
 
-			if ($length && ($value[0] == '"') && ($value[$length - 1] == '"'))
+			if ($length && ($value[0] === '"') && ($value[$length - 1] === '"'))
 			{
 				// Strip the quotes and Convert the new line characters.
 				$value = stripcslashes(substr($value, 1, ($length - 2)));
@@ -159,11 +159,11 @@ class IniFormat implements FormatInterface
 				// If the value is not quoted, we assume it is not a string.
 
 				// If the value is 'false' assume boolean false.
-				if ($value == 'false')
+				if ($value === 'false')
 				{
 					$value = false;
 				}
-				elseif ($value == 'true')
+				elseif ($value === 'true')
 				// If the value is 'true' assume boolean true.
 				{
 					$value = true;
@@ -224,7 +224,7 @@ class IniFormat implements FormatInterface
 
 			case 'string':
 				// Sanitize any CRLF characters..
-				$string = '"' . str_replace(array("\r\n", "\n"), '\\n', $value) . '"';
+				$string = '"' . str_replace(["\r\n", "\n"], '\\n', $value) . '"';
 				break;
 		}
 

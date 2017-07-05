@@ -25,26 +25,14 @@ class JsonFormat implements FormatInterface
 	 *
 	 * @return  string
 	 */
-	public static function structToString($struct, array $options = array())
+	public static function structToString($struct, array $options = [])
 	{
 		$depth  = StructureHelper::getValue($options, 'depth');
 		$option = StructureHelper::getValue($options, 'options', 0);
 
-		if (version_compare(PHP_VERSION, '5.5', '>'))
-		{
-			$depth = $depth ? : 512;
+		$depth = $depth ? : 512;
 
-			return json_encode($struct, $option, $depth);
-		}
-
-		/*
-		if ($depth)
-		{
-			throw new \InvalidArgumentException('Depth in json_encode() only support higher than PHP 5.5');
-		}
-		*/
-
-		return json_encode($struct, $option);
+		return json_encode($struct, $option, $depth);
 	}
 
 	/**
@@ -55,7 +43,7 @@ class JsonFormat implements FormatInterface
 	 *
 	 * @return  object   Data object.
 	 */
-	public static function stringToStruct($data, array $options = array())
+	public static function stringToStruct($data, array $options = [])
 	{
 		$assoc  = StructureHelper::getValue($options, 'assoc', false);
 		$depth  = StructureHelper::getValue($options, 'depth', 512);

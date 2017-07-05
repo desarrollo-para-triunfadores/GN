@@ -20,7 +20,7 @@ class PhpRenderer extends AbstractRenderer
 	 *
 	 * @var  array
 	 */
-	protected $block = array();
+	protected $block = [];
 
 	/**
 	 * Property blockQueue.
@@ -92,7 +92,7 @@ class PhpRenderer extends AbstractRenderer
 
 		foreach ($__data as $key => $value)
 		{
-			if ($key == 'data')
+			if ($key === 'data')
 			{
 				$key = '_data';
 			}
@@ -315,7 +315,7 @@ class PhpRenderer extends AbstractRenderer
 		$this->extend = null;
 		$this->parent = null;
 		$this->data   = null;
-		$this->block  = array();
+		$this->block  = [];
 		$this->blockQueue   = null;
 		$this->currentBlock = null;
 

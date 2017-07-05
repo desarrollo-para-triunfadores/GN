@@ -64,28 +64,35 @@ class PedidosController extends Controller {
             //dd($fecha1, $fecha2);
             /** si se pide un intervalo de fechas... */
             foreach ($pedidos as $pedido) {
-                $fechaPedido = Carbon::createFromFormat('d/m/Y', $pedido->fecha_pedido);  //convertimos a datetime, para calculos con fecha
-                if ( ( $fechaPedido >= $fecha1_en_datetime)&&($fechaPedido <= $fecha2_en_datetime)){ //se compara que la fecha del pedido se encuentre entre las fechas que determinan el rango
-                    array_push($ventas_entre_fechas, $pedido);      //guardamos la pedido en un listado para pasar a la vista
-                    //las dos posteriores variables son contadores que se irán incrementando a medida que transcurra el foreach
-                    $articulosVendidos =  $articulosVendidos +  $pedido->cantidadArticulos();
-                    $totalRecaudado = $totalRecaudado +  $pedido->importe();
-                    if(array_key_exists($pedido->cliente->id, $rankingClientes)){
-                        $clienteRanking = new ClienteRanking();
-                        $clienteRanking = $rankingClientes[$pedido->cliente->id];
-                        $clienteRanking->cantCompras =   $clienteRanking->cantCompras + 1;
-                        $clienteRanking->valorCompras = $clienteRanking->valorCompras + $pedido->importe();
-                        $rankingClientes[$pedido->cliente->id] = $clienteRanking;
-                    }else{
-                        $clienteRanking = new ClienteRanking();
-                        $clienteRanking->id = $pedido->cliente->id;
-                        $clienteRanking->nombreCompleto = $pedido->cliente->apellido." ".$pedido->cliente->nombre;
-                        //$clienteRanking->empresa = $pedido->cliente->empresa;
-                        $clienteRanking->cantCompras = 1;
-                        $clienteRanking->valorCompras = $pedido->importe();
-                        $rankingClientes[$pedido->cliente->id] = $clienteRanking;
-                    }
+                //--------------------------- seteamos a la variable $fechaPedido con la fecha de pedido o la fecha de entrega, segun chechbox de vista tablaPedidos.blade.php ------------------------
+                if($request->radio == 'buscar_en_fecha_pedido'){
+                    $fechaPedido = Carbon::createFromFormat('d/m/Y', $pedido->fecha_pedido);  //convertimos a datetime, para calculos con fecha
                 }
+                elseif($request->radio == 'buscar_en_fecha_entrega'){
+                    $fechaPedido = Carbon::createFromFormat('d/m/Y', $pedido->fecha_entrega_estimada);  //convertimos a datetime, para calculos con fecha
+                }
+                //------------------------------------------------------------------------------------------------
+                    if ( ( $fechaPedido >= $fecha1_en_datetime)&&($fechaPedido <= $fecha2_en_datetime)){ //se compara que la fecha del pedido se encuentre entre las fechas que determinan el rango
+                        array_push($ventas_entre_fechas, $pedido);      //guardamos la pedido en un listado para pasar a la vista
+                        //las dos posteriores variables son contadores que se irán incrementando a medida que transcurra el foreach
+                        $articulosVendidos =  $articulosVendidos +  $pedido->cantidadArticulos();
+                        $totalRecaudado = $totalRecaudado +  $pedido->importe();
+                        if(array_key_exists($pedido->cliente->id, $rankingClientes)){
+                            $clienteRanking = new ClienteRanking();
+                            $clienteRanking = $rankingClientes[$pedido->cliente->id];
+                            $clienteRanking->cantCompras =   $clienteRanking->cantCompras + 1;
+                            $clienteRanking->valorCompras = $clienteRanking->valorCompras + $pedido->importe();
+                            $rankingClientes[$pedido->cliente->id] = $clienteRanking;
+                        }else{
+                            $clienteRanking = new ClienteRanking();
+                            $clienteRanking->id = $pedido->cliente->id;
+                            $clienteRanking->nombreCompleto = $pedido->cliente->apellido." ".$pedido->cliente->nombre;
+                            //$clienteRanking->empresa = $pedido->cliente->empresa;
+                            $clienteRanking->cantCompras = 1;
+                            $clienteRanking->valorCompras = $pedido->importe();
+                            $rankingClientes[$pedido->cliente->id] = $clienteRanking;
+                        }
+                    }
             }
             //se retornan la vista y los datos asociados a ella.
             return view('admin.pedidos.tablaPedidos')

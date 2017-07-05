@@ -42,11 +42,15 @@
                     </div>
                 </div>
             </div>
-         </div>
+            <button data-placement="bottom" title="Imprimir un reporte de la pedidos" type="button" data-hover="tooltip" onclick="reporte_ventas()" class="btn btn-grey">
+                <i class="fa fa-print" aria-hidden="true"></i> Imprimir Ventas
+            </button>
+        </div>
     </div>
 @endsection
 
 @section('script')
+
     <script>
         var listSidebar = "li9";
         var elemFaltante = "nada";

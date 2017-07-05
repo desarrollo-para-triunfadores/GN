@@ -2,24 +2,26 @@
 
 namespace Silly;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Invoker\Exception\InvocationException;
 use Invoker\Invoker;
 use Invoker\InvokerInterface;
 use Invoker\ParameterResolver\AssociativeArrayResolver;
 use Invoker\ParameterResolver\Container\ParameterNameContainerResolver;
 use Invoker\ParameterResolver\Container\TypeHintContainerResolver;
-use Invoker\ParameterResolver\DefaultValueResolver;
-use Invoker\ParameterResolver\NumericArrayResolver;
 use Invoker\ParameterResolver\ResolverChain;
+use Invoker\ParameterResolver\TypeHintResolver;
 use Invoker\Reflection\CallableReflection;
 use Silly\Command\Command;
 use Silly\Command\ExpressionParser;
 use Symfony\Component\Console\Application as SymfonyApplication;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * CLI application.
@@ -70,9 +72,17 @@ class Application extends SymfonyApplication
         $commandFunction = function (InputInterface $input, OutputInterface $output) use ($callable) {
             $parameters = array_merge(
                 [
+                    // Injection by parameter name
                     'input'  => $input,
                     'output' => $output,
+                    // Injections by type-hint
+                    InputInterface::class => $input,
+                    OutputInterface::class => $output,
+                    Input::class => $input,
+                    Output::class => $output,
+                    SymfonyStyle::class => new SymfonyStyle($input, $output),
                 ],
+                // Arguments and options are injected by parameter names
                 $input->getArguments(),
                 $input->getOptions()
             );
@@ -126,7 +136,7 @@ class Application extends SymfonyApplication
      * In case of conflict with a command parameters, the command parameter is injected
      * in priority over dependency injection.
      *
-     * @param ContainerInterface $container Container implementing container-interop
+     * @param ContainerInterface $container Container implementing PSR-11
      * @param bool               $injectByTypeHint
      * @param bool               $injectByParameterName
      */
@@ -137,18 +147,15 @@ class Application extends SymfonyApplication
     ) {
         $this->container = $container;
 
-        $resolvers = [
-            new AssociativeArrayResolver,
-            new HyphenatedInputResolver,
-        ];
+        $resolver = $this->createParameterResolver();
         if ($injectByTypeHint) {
-            $resolvers[] = new TypeHintContainerResolver($container);
+            $resolver->appendResolver(new TypeHintContainerResolver($container));
         }
         if ($injectByParameterName) {
-            $resolvers[] = new ParameterNameContainerResolver($container);
+            $resolver->appendResolver(new ParameterNameContainerResolver($container));
         }
 
-        $this->invoker = new Invoker(new ResolverChain($resolvers), $container);
+        $this->invoker = new Invoker($resolver, $container);
     }
 
     /**
@@ -191,6 +198,11 @@ class Application extends SymfonyApplication
         $this->invoker = $invoker;
     }
 
+    /**
+     * @param string $expression
+     * @param callable $callable
+     * @return Command
+     */
     private function createCommand($expression, callable $callable)
     {
         $result = $this->expressionParser->parse($expression);
@@ -220,6 +232,11 @@ class Application extends SymfonyApplication
         }
     }
 
+    /**
+     * @param Command $command
+     * @param callable $callable
+     * @return array
+     */
     private function defaultsViaReflection($command, $callable)
     {
         if (! is_callable($callable)) {
@@ -237,28 +254,51 @@ class Application extends SymfonyApplication
                 continue;
             }
 
-            if (! $definition->hasArgument($parameter->name) && ! $definition->hasOption($parameter->name)) {
+            $parameterName = $parameter->name;
+            $hyphenatedCaseName = $this->fromCamelCase($parameterName);
+
+            if ($definition->hasArgument($hyphenatedCaseName) || $definition->hasOption($hyphenatedCaseName)) {
+                $parameterName = $hyphenatedCaseName;
+            }
+
+            if (! $definition->hasArgument($parameterName) && ! $definition->hasOption($parameterName)) {
                 continue;
             }
 
-            $defaults[$parameter->name] = $parameter->getDefaultValue();
+            $defaults[$parameterName] = $parameter->getDefaultValue();
         }
 
         return $defaults;
     }
 
     /**
-     * Create the default parameter resolver.
+     * Convert from camel case to hyphenated case
      *
-     * @return ParameterResolver
+     * @see http://stackoverflow.com/questions/1993721/how-to-convert-camelcase-to-camel-case
+     * @param string $input
+     * @return string
+     */
+    private function fromCamelCase($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return implode('-', $ret);
+    }
+
+    /**
+     * @return ResolverChain
      */
     private function createParameterResolver()
     {
         return new ResolverChain([
-            new NumericArrayResolver,
             new AssociativeArrayResolver,
             new HyphenatedInputResolver,
-            new DefaultValueResolver,
+            new TypeHintResolver,
         ]);
     }
 

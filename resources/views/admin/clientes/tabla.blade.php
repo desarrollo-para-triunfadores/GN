@@ -41,7 +41,7 @@
                                 <div class="panel-body">
                                     @include('admin.partes.msjError')
                                     @include('flash::message')
-                                    <table class="display dataTable table table-hover table-striped">
+                                    <table id="tabla_clientes" class="display dataTable table table-hover table-striped">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Nombre</th>
@@ -107,6 +107,19 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
+                                        <tfoot>
+                                        <th class="text-center">Nombre</th>
+                                        <th class="text-center">Responsabilidad ante IVA</th>
+                                        <th class="text-center">Representante</th>
+                                        {{--
+                                        <th class="text-center">CUIT</th>
+                                        <th class="text-center">DNI</th>
+                                        --}}
+                                        <th class="text-center">Localidad y dirección</th>
+                                        <th class="text-center">Teléfono</th>
+                                        <th class="text-center">Fecha de ultimo movimiento</th>
+                                        <th class="text-center">Ver / editar</th>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

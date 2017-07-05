@@ -51,10 +51,6 @@ $("#form-actualizar").submit(function (e) {
 });
 
 
-
-
-
-
 function reporte_cierre_caja(){
     var numLi = 0;
     var lineas = [];
@@ -127,3 +123,11 @@ function registrarPagoCheque(cheque_id){
         }
     });
 }
+
+/** Loqueando confiltro por fecha en MOVIMIENTO **/
+
+
+
+
+
+

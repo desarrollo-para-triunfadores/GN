@@ -164,7 +164,7 @@
                     <span class="fa fa-money" aria-hidden="true"></span> Pagar restante c/ Cheque
                 </button>
                 @endif
-                @if ($pedido->pagado || $pedido->factura=='1')
+                @if (($pedido->pagado) && !($pedido->nro_cae))
                     <button class="btn btn-success btn-block" type="button" onclick="generarFactura('{{ $pedido->cliente->id }}','{{ $pedido->senado }}')">Generar Factura Electrónica</button>
                 @elseif($pedido->entregado == '-1') {{--  Si se cancelo el pedido "entregado" = -1   --}}
 

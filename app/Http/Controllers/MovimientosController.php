@@ -28,10 +28,15 @@ class MovimientosController extends Controller
      */
     public function index($id)  //la solicitud se realiza utilizando ajax se devuelven los registros únicamente a la tabla.
     {
-        $movimientos = Movimiento::where('caja_id', $id)
-        ->orderBy('id','ASC')
-        ->paginate();
-        return response()->json(view('admin.movimientos.tablaRegistros',compact('movimientos'))->render());
+        //if(is_null($request->fechaInicio)) {
+            $movimientos = Movimiento::where('caja_id', $request->id)
+                ->orderBy('id', 'ASC')
+                ->paginate();
+            return response()->json(view('admin.movimientos.tablaRegistros', compact('movimientos'))->render());
+        //}
+        /** Filtrar movimientos por fecha */
+
+
     }
 
     public function create()

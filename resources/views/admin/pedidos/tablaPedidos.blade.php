@@ -29,7 +29,6 @@
 
         if(strlen ($mes)==1){                       #si mes tiene un digito anteponer un 0 al mes
             if(strlen ($dia)==1){                       #si dia tambien tiene un digito anteponer un 0 al dia
-                //$fecha_hoy = $año.'-0'.$mes.'-0'.$dia;
                 $fecha_hoy = '0'.$dia.'/0'.$mes.'/'.$año;
             }else{
                 $fecha_hoy = $dia.'/0'.$mes.'/'.$año;
@@ -42,9 +41,9 @@
             }
         }
         ?>
-        <div class="page-header pull-left">
+        <div class="page-header pull-left ">
             <div class="page-toolbar">
-                <div class="row ">
+                <div class="row">
                     @include('admin.pedidos.contenidoFormBusqueda')
                 </div>
             </div>
@@ -73,21 +72,22 @@
                                 <div class="panel-body">
                                   @include('admin.partes.msjError')
                                   @include('flash::message')
-                                  <table id="example" class="display dataTable table table-hover table-striped" cellspacing="0" width="100%">
+                                  <table id="tabla_p_p" class="display dataTable table table-hover table-striped" cellspacing="0" width="100%">
                                       <thead>
                                           <tr>
                                               <th class="text-center">#</th>
                                               <th class="text-center">Cliente</th>
                                               <th class="text-center">Fecha y hora de pedido</th>
                                               <th class="text-center">Importe</th>
-                                              <th class="text-center">Cantidad señada</th>
-                                              <th class="text-center">Usuario que tomó pedido</th>
+                                              <th class="text-center">Cant señada</th>
+                                              <th class="text-center">Tomó pedido</th>
                                               <th class="text-center">Modalidad pago</th>
-                                              <th class="text-center">Fecha tentativa de entrega</th>
+                                              <th class="text-center">Fecha de entrega</th>
                                               <th class="text-center">Ver</th>
                                           </tr>
                                       </thead>
                                       <tbody>
+
                                       @foreach($pedidos as $pedido)
                                           <tr>
                                               <td class="text-center">{{ $pedido->id }}</td>
@@ -124,19 +124,28 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                              <th class="text-center"></th>
+                                              <th class="text-center">#</th>
                                               <th class="text-center">Cliente</th>
-                                              <th class="text-center">Fecha Pedido</th>
-                                              <th class="text-center">Cliente</th>
-
+                                              <th class="text-center">Fecha y hora de pedido</th>
+                                              <th class="text-center">Importe</th>
+                                              <th class="text-center">Cant señada</th>
+                                              <th class="text-center">Tomo pedido</th>
+                                              <th class="text-center">Modalidad pago</th>
+                                              <th class="text-center">Fecha de entrega</th>
+                                              <th class="text-center">Ver</th>
                                           </tr>
                                       <tfoot>
                                   </table>
+
                                 </div>
                             </div>
+                            <button data-placement="bottom" title="Imprimir un reporte de la pedidos" type="button" data-hover="tooltip" onclick="reporte_pedidos()" class="btn btn-grey">
+                                <i class="fa fa-print" aria-hidden="true"></i> Imprimir Pedidos
+                            </button>
+                            <button class="foot">
+                                <a data-toggle="tooltip" data-placement="bottom" href="" title="Registrar un nuevo pedido o venta de uno o mas producto"  class="btn btn-red"> <span class="fa fa-crosshairs" aria-hidden="true"></span> Ver Cancelados</a>
+                            </button>
                         </div>
-
-
                     </div>
                 </div>
             </div>

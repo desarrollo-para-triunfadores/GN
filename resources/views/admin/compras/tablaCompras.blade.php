@@ -14,6 +14,7 @@
             <div class="page-title">
               Historial de compras</div>
         </div>
+
         <div class="page-header pull-right">
             <div class="page-toolbar">
                 <a data-toggle="tooltip" data-placement="bottom" href="{{ route('admin.compras.create') }}" title="Registrar un nuevo compra o compra de uno o mas insumos"  class="btn btn-blue"> <span class="fa fa-plus-circle" aria-hidden="true"></span> Registrar Compra de Insumos</a>

@@ -163,6 +163,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -214,10 +215,12 @@ return [
         /*
          * Aliases Personales...
          */
-
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Flash' => Laracasts\Flash\Flash::class,
+
+         #Añadido el 1/7/17 para reportes en pdf /*
+         'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 
