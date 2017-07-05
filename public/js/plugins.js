@@ -8,23 +8,23 @@ function constructorTabla(){
     $('.dataTable').DataTable({
         responsive: true,
         "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
+        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
 
     });
     /**Para Tabla Compras**/
     var tabla_compras = $('#tabla_compras').DataTable({
         responsive: true,
         "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
+        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
     });
-//Datatables - filtro individuales - instanciación de los filtros
+//Datatables - filtro individuales - instanciaciï¿½n de los filtros
     $('#tabla_compras tfoot th').each(function () {
         var title = $(this).text();
-        if ((title !== '#')&&( title !== 'Ver')&&( title !== 'N° Compra')) { //ignoramos la columna de los botones
+        if ((title !== '#')&&( title !== 'Ver')&&( title !== 'Nï¿½ Compra')) { //ignoramos la columna de los botones
             $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
         }
     });
-    //Datatables - filtro individuales - búsqueda
+    //Datatables - filtro individuales - bï¿½squeda
     tabla_compras.columns().every(function () {
         var that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -38,16 +38,16 @@ function constructorTabla(){
     var tabla_clientes = $('#tabla_clientes').DataTable({
         responsive: true,
         "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
+        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
     });
-//Datatables - filtro individuales - instanciación de los filtros
+//Datatables - filtro individuales - instanciaciï¿½n de los filtros
     $('#tabla_clientes tfoot th').each(function () {
         var title = $(this).text();
-        if ((title !== 'Ver / editar')&&( title !== 'Ver')&&( title !== 'N° Compra')) { //ignoramos la columna de los botones
+        if ((title !== 'Ver / editar')&&( title !== 'Ver')&&( title !== 'Nï¿½ Compra')) { //ignoramos la columna de los botones
             $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
         }
     });
-    //Datatables - filtro individuales - búsqueda
+    //Datatables - filtro individuales - bï¿½squeda
     tabla_clientes.columns().every(function () {
         var that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -62,16 +62,16 @@ function constructorTabla(){
     var tabla_mov = $('#tab-movimientos').DataTable({
         responsive: true,
         "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
+        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
     });
-//Datatables - filtro individuales - instanciación de los filtros
+//Datatables - filtro individuales - instanciaciï¿½n de los filtros
     $('#tab-movimientos tfoot th').each(function () {
         var title = $(this).text();
-        if ((title !== 'Ver / editar')&&( title !== 'Ver')&&( title !== 'N° Compra')) { //ignoramos la columna de los botones
+        if ((title !== 'Ver / editar')&&( title !== 'Ver')&&( title !== 'Nï¿½ Compra')) { //ignoramos la columna de los botones
             $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
         }
     });
-    //Datatables - filtro individuales - búsqueda
+    //Datatables - filtro individuales - bï¿½squeda
     tabla_mov.columns().every(function () {
         var that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -112,21 +112,21 @@ function constructorTabla(){
 
 /** Inicio Tabla Pedidos **/
 function constructorTabla_pedidos_pendientes(){
-    //Datatable - instaciación del plugin
+    //Datatable - instaciaciï¿½n del plugin
     var tabla_pp = $('#tabla_p_p').DataTable({
         responsive: true,
         "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
+        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
     });
 
-    //Datatables - filtro individuales - instanciación de los filtros
+    //Datatables - filtro individuales - instanciaciï¿½n de los filtros
     $('#tabla_p_p tfoot th').each(function () {
         var title = $(this).text();
-        if ((title !== '#')&&( title !== 'Ver')&&( title !== 'N°')) { //ignoramos la columna de los botones
+        if ((title !== '#')&&( title !== 'Ver')&&( title !== 'Nï¿½')) { //ignoramos la columna de los botones
             $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
         }
     });
-    //Datatables - filtro individuales - búsqueda
+    //Datatables - filtro individuales - bï¿½squeda
     tabla_pp.columns().every(function () {
         var that = this;
         $('input', this.footer()).on('keyup change', function () {
@@ -143,29 +143,29 @@ function constructorTabla_pedidos_pendientes(){
     });
 
     /** Inicio Tabla Movimientos **/
-//Datatable - instaciación del plugin
-    var tabla_mov = $('#tab-movimientos').DataTable({
-        responsive: true,
-        "pageLength": 20,
-        "language": tabla_traducida, // esta variable esta instanciada donde están declarados todos los js.
-    });
-
-//Datatables - filtro individuales - instanciación de los filtros
-    $('#tab-movimientos tfoot th').each(function () {
-        var title = $(this).text();
-        if ( title !== 'N°') { //ignoramos la columna de los botones
-            $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
-        }
-    });
-//Datatables - filtro individuales - búsqueda
-    tabla_mov.columns().every(function () {
-        var that = this;
-        $('input', this.footer()).on('keyup change', function () {
-            if (that.search() !== this.value) {
-                that.search(this.value).draw();
-            }
-        });
-    });
+////Datatable - instaciaciï¿½n del plugin
+//    var tabla_mov = $('#tab-movimientos').DataTable({
+//        responsive: true,
+//        "pageLength": 20,
+//        "language": tabla_traducida, // esta variable esta instanciada donde estï¿½n declarados todos los js.
+//    });
+//
+////Datatables - filtro individuales - instanciaciï¿½n de los filtros
+//    $('#tab-movimientos tfoot th').each(function () {
+//        var title = $(this).text();
+//        if ( title !== 'Nï¿½') { //ignoramos la columna de los botones
+//            $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
+//        }
+//    });
+////Datatables - filtro individuales - bï¿½squeda
+//    tabla_mov.columns().every(function () {
+//        var that = this;
+//        $('input', this.footer()).on('keyup change', function () {
+//            if (that.search() !== this.value) {
+//                that.search(this.value).draw();
+//            }
+//        });
+//    });
 }
 
 function constructorTabla_movimientos(){

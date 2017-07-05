@@ -68,6 +68,7 @@ return array(
     'App\\Http\\Controllers\\MaterialesController' => $baseDir . '/app/Http/Controllers/MaterialesController.php',
     'App\\Http\\Controllers\\MovimientosController' => $baseDir . '/app/Http/Controllers/MovimientosController.php',
     'App\\Http\\Controllers\\PaisesController' => $baseDir . '/app/Http/Controllers/PaisesController.php',
+    'App\\Http\\Controllers\\PdfController' => $baseDir . '/app/Http/Controllers/PdfController.php',
     'App\\Http\\Controllers\\PedidosController' => $baseDir . '/app/Http/Controllers/PedidosController.php',
     'App\\Http\\Controllers\\ProductosParaFrontController' => $baseDir . '/app/Http/Controllers/ProductosParaFrontController.php',
     'App\\Http\\Controllers\\ProveedoresController' => $baseDir . '/app/Http/Controllers/ProveedoresController.php',

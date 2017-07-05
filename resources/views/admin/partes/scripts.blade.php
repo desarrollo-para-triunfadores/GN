@@ -37,7 +37,7 @@
 {{--
 --}}
 
-<!-- No se por que pero si no está esto no funciona el DataTable ? -->
+<!-- No se por que pero si no estï¿½ esto no funciona el DataTable ? -->
 <script src="{{ asset('plantillas/KAdmin-Dark/script/zabuto_calendar.min.js') }}"></script>
 
 <script src="{{ asset('plantillas/KAdmin-Dark/script/index.js')}} "></script>
@@ -63,10 +63,15 @@
 <script src="{{ asset('js/plugins.js') }}"></script>
 <script src="{{ asset('js/busqueda.js') }}"></script>
 <script src="{{ asset('js/masked-input.min.js') }}"></script>
+<!--
+ DataTables 
+<script src="{{ asset('plantillas/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plantillas/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>-->
 
 <!-- DataTables -->
-<script src="{{ asset('plantillas/DataTables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('plantillas/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plantillas/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plantillas/datatables/js/dataTables.responsive.min.js') }}"></script>
+
 
 
 <script src="{{ asset('plantillas/bootstrap-select/js/bootstrap-select.js') }}"></script>
@@ -103,12 +108,12 @@
 
 <!--1/7/17 Instancia de DataTables (Anteriormente el public/js/pluguins)    -->
 <script>
-    //esta variable se usa para traducir todas las tablas del sistema. Por alguna razón hay incompatibilidad entre el cambio del lenguaje y los filtros individaules en las columnas. Por eso se recurre a esto.
+    //esta variable se usa para traducir todas las tablas del sistema. Por alguna razï¿½n hay incompatibilidad entre el cambio del lenguaje y los filtros individaules en las columnas. Por eso se recurre a esto.
     var tabla_traducida = {
         "sProcessing": "Procesando...",
         "sLengthMenu": "Mostrar _MENU_ registros",
         "sZeroRecords": "No se encontraron resultados",
-        "sEmptyTable": "Ningún dato disponible en esta tabla",
+        "sEmptyTable": "Ningï¿½n dato disponible en esta tabla",
         "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
         "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -119,7 +124,7 @@
         "sLoadingRecords": "Cargando...",
         "oPaginate": {
             "sFirst": "Primero",
-            "sLast": "Último",
+            "sLast": "ï¿½ltimo",
             "sNext": "Siguiente",
             "sPrevious": "Anterior"
         },

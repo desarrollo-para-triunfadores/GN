@@ -475,6 +475,7 @@ class ComposerStaticInit132f1eb12e94b60629236f4883b26398
         'App\\Http\\Controllers\\MaterialesController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaterialesController.php',
         'App\\Http\\Controllers\\MovimientosController' => __DIR__ . '/../..' . '/app/Http/Controllers/MovimientosController.php',
         'App\\Http\\Controllers\\PaisesController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaisesController.php',
+        'App\\Http\\Controllers\\PdfController' => __DIR__ . '/../..' . '/app/Http/Controllers/PdfController.php',
         'App\\Http\\Controllers\\PedidosController' => __DIR__ . '/../..' . '/app/Http/Controllers/PedidosController.php',
         'App\\Http\\Controllers\\ProductosParaFrontController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductosParaFrontController.php',
         'App\\Http\\Controllers\\ProveedoresController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProveedoresController.php',

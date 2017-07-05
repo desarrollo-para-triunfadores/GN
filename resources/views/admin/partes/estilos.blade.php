@@ -30,8 +30,17 @@
 	<link type="text/css" rel="stylesheet" href="{{ asset('plantillas/bootstrap-datepicker/css/datepicker3.css') }}">
 
     <link href="{{ asset('plantillas/parsley/src/parsley.css') }}" rel='stylesheet' type='text/css'>
-    <link href="{{ asset('plantillas/DataTables/media/css/jquery.dataTables.css') }}" rel='stylesheet' type='text/css'>
-    <link href="{{ asset('plantillas/DataTables/extensions/Responsive/css/dataTables.responsive.css') }}" rel='stylesheet' type='text/css'>
+<!--    <link href="{{ asset('plantillas/DataTables/media/css/jquery.dataTables.css') }}" rel='stylesheet' type='text/css'>
+    <link href="{{ asset('plantillas/DataTables/extensions/Responsive/css/dataTables.responsive.css') }}" rel='stylesheet' type='text/css'>-->
+
+
+
+<!-- DataTables -->
+<link rel="stylesheet" type="text/css" href="{{ asset('plantillas/datatables/css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plantillas/datatables/css/responsive.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plantillas/datatables/css/resalte.css') }}">
+
+
 
 
     <!--JQuery Steps agregado en createPedido-->

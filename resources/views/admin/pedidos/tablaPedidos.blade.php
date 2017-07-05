@@ -72,7 +72,7 @@
                                 <div class="panel-body">
                                   @include('admin.partes.msjError')
                                   @include('flash::message')
-                                  <table id="tabla_p_p" class="display dataTable table table-hover table-striped" cellspacing="0" width="100%">
+                                  <table id="tabla_p_p" class="display table table-hover table-striped" cellspacing="0" width="100%">
                                       <thead>
                                           <tr>
                                               <th class="text-center">#</th>
